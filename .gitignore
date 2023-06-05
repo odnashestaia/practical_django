@@ -1,0 +1,25 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+.idea
+.env
+.ipynb_checkpoints
+other_static
+*.ipynb
+.pytest_cache
+*.sqlite3
+wiki
+static
+media
+__pycache__
+blog/__pycache__
+discussions/__pycache__
+practical_django/__pycache__
+blog/test/__pycache__
+blog/migrations
+discussions/migrations
