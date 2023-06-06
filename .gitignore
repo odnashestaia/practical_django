@@ -13,10 +13,8 @@ other_static
 *.ipynb
 .pytest_cache
 *.sqlite3
-wiki
 static
 media
-__pycache__
 blog/__pycache__
 discussions/__pycache__
 practical_django/__pycache__

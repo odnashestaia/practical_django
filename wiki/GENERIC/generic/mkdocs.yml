@@ -1,0 +1,60 @@
+site_name: practece_django
+
+#docs_dir: '/home/agate/GDprojects/godot/wiki/1_startGodot/startgodot/docs'
+
+#site_dir: 'wiki/GENERIC/generic/build'
+
+
+#site_url: https://example.com/
+nav:
+
+  - index: index.md
+  - Dev: dev.md
+  - pip install: pip.md
+  - settings: settings.md
+  - blog: blog/view.md
+  - dev blog: blog/dev_blog.md
+  - templates: templates_project/templates.md
+  - structure: templates_project/structure.md
+
+
+
+
+
+#theme: readthedocs
+theme:
+  name: material
+
+
+dev_addr:
+  127.0.0.1:8200
+
+
+  #markdown_extensions:
+  #- toc:
+#permalink: True
+
+markdown_extensions:
+
+
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+    #- toc:
+    #permalink: True
+
+
+# сворачивание страниц
+collapse_single_pages: true
+
+plugins:
+  - search
+  - awesome-pages
+
+site_author:
+  Валерий Бовсуновский
+
+
+#pip
+#pip install mkdocs-awesome-pages-plugin
