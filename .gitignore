@@ -12,12 +12,8 @@
 other_static
 *.ipynb
 .pytest_cache
-*.sqlite3
 static
-media
 blog/__pycache__
 discussions/__pycache__
 practical_django/__pycache__
 blog/test/__pycache__
-blog/migrations
-discussions/migrations
