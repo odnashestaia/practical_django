@@ -38,4 +38,3 @@ class Discussion(models.Model):
     # методы модели
     def __str__(self):
         return self.title
-
