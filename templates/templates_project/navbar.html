@@ -1,6 +1,5 @@
 {% block navbar %}
 
-    // TODO: доделать навбар
     <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button"
          style="background:rgb(34, 34, 34);border-radius:20;border-top-left-radius: 20;border-top-right-radius: 20;border-bottom-right-radius: 20;border-bottom-left-radius: 20;border-style: none;padding-top: 0;padding-bottom: 10px;">
         <div class="container">
@@ -15,7 +14,7 @@
                                                      data-bs-toggle="dropdown" href="#"
                                                      style="color: rgba(224,217,217,0.9);">Посты</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{% url 'create' %}">Создание постов</a>
+                            <a class="dropdown-item" href="{% url 'post_create' %}">Создание постов</a>
                             <a class="dropdown-item" href="#">Все посты</a>
                             <a class="dropdown-item" href="{% url 'user_post_list' user %}">Мои посты</a></div>
                     </li>

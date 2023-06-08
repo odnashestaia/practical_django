@@ -24,7 +24,6 @@ urlpatterns = [
     # path('__debug__/', include('debug_toolbar.urls')),
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
-    path('discussion/', include('discussions.urls')),
 
     # path('register/', user_views.register, name='register'),
     # path('profile/', user_views.profile, name='profile'),
