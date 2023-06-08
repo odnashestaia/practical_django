@@ -15,5 +15,6 @@ other_static
 static
 blog/__pycache__
 discussions/__pycache__
+forms_app/__pycache__
 practical_django/__pycache__
 blog/test/__pycache__
