@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     # мои приложения
     'blog.apps.BlogConfig',
     'discussions.apps.DiscussionsConfig',
+    'forms_app.apps.FormsAppConfig',
 ]
 
 SITE_ID = 1
