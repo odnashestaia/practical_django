@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}{#наследуется от blog/base.html#}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content_blog %}
+    <H2>Что хотите обсудить</H2>
+
+    <form method="post">
+        {{ form.media }}
+        {{ form|crispy }}
+        {% csrf_token %}
+
+        <div class="form-group">
+            <button class="btn btn-info" type="submit">Отправить</button>
+            {#<a class="btn btn-danger" href="{% url 'blog-home' %}">Cancel</a>#}
+        </div>
+
+    </form>
+
+{% endblock %}
