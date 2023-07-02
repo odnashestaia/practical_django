@@ -11,8 +11,8 @@ def contact_send(request):
     if request.method == 'POST':
         # если приходит post запрос, то форма заполняется
         form = ContactForm(request.POST, request.FILES)  # request.POST - обработка post запроса
-        # request.FILES- обработка файлов не обьяснил
-        if form.is_valid():  # проверка на волидность формы для дольнейшего заполнения
+        # request.FILES- обработка файлов не объяснил
+        if form.is_valid():  # проверка на валидность формы для дольнейшего заполнения
             # добавление в форму данные
             date_creation = form.cleaned_data['date_creation']
             subject = form.cleaned_data['subject']
@@ -28,11 +28,11 @@ def contact_send(request):
                     return HttpResponse('Неверный email')  # вывод ошибки
                 # return redirect('success')  # переправляем дпользователя на другую страницу
                 form = ContactForm()
-                messages.success(request, 'Сообщение отправленно!')
+                messages.success(request, 'Сообщение отправлено!')
         else:  # вывод ошибок
             messages.error(request, 'Error')
     else:
-        # выдается пустая форма если это get запрос или какой либо еще
+        # выдается пустая форма если это get запрос или какой-либо еще
         form = ContactForm()
 
     return render(request, 'forms_app/email.html', {'form': form})  # вывод формы в html
