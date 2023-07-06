@@ -5,7 +5,7 @@ import datetime
 
 
 class ContactForm(forms.Form):
-    date_creation = forms.DateField(initial=datetime.date.today(), label='Сегодняшняя дата', label_suffix='23')
+    date_creation = forms.DateField(initial=datetime.date.today(), label='Сегодняшняя дата')
     subject = forms.CharField(max_length=100, label='Тема вопроса')
     message = forms.CharField(max_length=500, label='Сообщение')
     sender = forms.EmailField(label='Ваша почта')

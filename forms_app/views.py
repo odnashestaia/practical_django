@@ -1,3 +1,5 @@
+import datetime
+
 import django.contrib.messages
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
@@ -22,6 +24,11 @@ def contact_send(request):
             recipients = ['lapunovn14@gmail.com']  # почта откуда отправляется сообщение
             if cc_myself:  # проверка на добавления на рассылку
                 recipients.append(message)
+
+            else:
+                date_creation_today = datetime.date.today()
+                form = ContactForm(initial={'date_creation': date_creation_today})
+
                 try:
                     send_mail(subject, message, sender, recipients)  # отправка сообщений
                 except BadHeaderError:

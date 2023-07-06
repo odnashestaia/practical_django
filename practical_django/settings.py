@@ -97,6 +97,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'discussions.apps.DiscussionsConfig',
     'forms_app.apps.FormsAppConfig',
+    'models_form.apps.ModelsFormConfig'
 ]
 
 SITE_ID = 1
