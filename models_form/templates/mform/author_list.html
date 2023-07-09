@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+{% block title %} dlskdjfa;sdf {% endblock %}
+
+{% block content_blog %}
+    {% for author in author_list %}
+        <ul>
+        <li><a href="{{ author.pk }}">{{ author.name }}</a></li>
+        <li>{{ author.title }}</li>
+        <li>{{ author.birthday }}</li>
+        </ul>
+    {% endfor %}
+{% endblock %}

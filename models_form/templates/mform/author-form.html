@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} model_form {% endblock %}
+
+{% block content_blog %}
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="intro">
+                <h3 class="text-center" data-bss-hover-animate="pluse">
+                    расскажите
+                </h3>
+                <p class="text-center">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {{ form|crispy }}
+                        <div class="form-group">
+                            <button class="btn" type="submit">Отправить</button>
+                        </div>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
