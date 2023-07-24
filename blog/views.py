@@ -1,12 +1,20 @@
 """
 вывод постов пользователей
 """
+from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, CreateView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, CreateView, DetailView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 
 from blog.models import *
+
+
+def index(request):
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'blog/index.html', context)
 
 
 class UserPostListView(ListView):
@@ -43,3 +51,15 @@ class PostDetailView(DetailView):
     model = Post
     template_name = "blog/post_detail.html"
     context_object_name = 'post_detail'
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post  # работа с моделью
+    success_url = reverse_lazy('/')  # перенапровление после выполнения удаления
+    template_name = 'blog/delete_post.html'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False

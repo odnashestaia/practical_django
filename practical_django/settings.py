@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 # Debug Toolbar
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -65,7 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
-    # загруженные  пакеты
+    # загруженные пакеты
 
     # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#install-the-app
     "debug_toolbar",
@@ -229,6 +230,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CRISPY_TEMPLATE_PACK = 'uni_form'
 # turn on bootstrap4
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = 'blog_home'
 
 # End django-crispy-forms
 

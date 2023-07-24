@@ -18,10 +18,14 @@
                         {{ post_detail.title }}
                     </h1>
                     <p class="text-center">
+
                         <span class="by">by</span> <a href="#">{{ post_detail.author }}</a>&nbsp;&nbsp;<span
                             class="date">{{ post_detail.date_created|date:"F d Y" }} </span>
                         {{ post_detail.content|safe }}
                     </p>
+                    {% if blog_post_detal.author == user %}
+                        <a href="{% url 'post-delete' blog_post_detail.id %}"><button>Удалить</button></a>
+                    {% endif %}
                 </div>
             {% else %}
                 <h1> Постов пока нет </h1>
