@@ -17,3 +17,5 @@ blog/__pycache__
 discussions/__pycache__
 practical_django/__pycache__
 blog/test/__pycache__
+*.css
+*.js

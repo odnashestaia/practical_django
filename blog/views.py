@@ -3,7 +3,7 @@
 """
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, CreateView, DetailView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 
@@ -55,11 +55,27 @@ class PostDetailView(DetailView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post  # работа с моделью
-    success_url = reverse_lazy('/')  # перенапровление после выполнения удаления
+    success_url = ('/')  # перенапровление после выполнения удаления
     template_name = 'blog/delete_post.html'
 
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
+            return True
+        return False
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        """ проверка на юзера, то есть проверяем может ли этот юзер работать с записью """
+        post = self.get_object()  # берем данные из модели post
+        if self.request.user == post.author:  # сверяем автора поста и пользователя
             return True
         return False

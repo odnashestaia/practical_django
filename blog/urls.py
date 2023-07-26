@@ -8,8 +8,9 @@ rer
 
 urlpatterns = [
     path('', index, name='blog_home'),
-    path('posts/user/<str:username>', UserPostListView.as_view(), name='user_post_list'),
+    path('post/user/<str:username>', UserPostListView.as_view(), name='user_post_list'),
     path('post/new', PostCreateView.as_view(), name='post_create'),
-    path('post/<str:slug>/<int:pk>/detail', PostDetailView.as_view(), name='delete_post'),
+    path('post/<str:slug>/<int:pk>/detail', PostDetailView.as_view(), name='post-detail'),
     path('post/<int:pk>/delete', PostDeleteView.as_view(), name='post-delete'),
+    path('post/<int:pk>/update', PostUpdateView.as_view(), name='post-update'),
 ]

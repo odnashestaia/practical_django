@@ -19,7 +19,7 @@
                             {{ post.title }}
                         </h1>
                         <p class="text-center">
-                            <span class="by">by</span> <a href="post/<str:slug>/<int:pk>/detail">{{ post.author }}</a>&nbsp;&nbsp;<span
+                            <span class="by">by</span> <a href="{% url 'post-detail' post.slug post.pk %}">{{ post.author }}</a>&nbsp;&nbsp;<span
                                 class="date">{{ post.date_created|date:"F d Y" }} </span>
                             {{ post.content|safe }}
                         </p>

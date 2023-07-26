@@ -23,8 +23,9 @@
                             class="date">{{ post_detail.date_created|date:"F d Y" }} </span>
                         {{ post_detail.content|safe }}
                     </p>
-                    {% if blog_post_detal.author == user %}
-                        <a href="{% url 'post-delete' blog_post_detail.id %}"><button>Удалить</button></a>
+                    {% if post_detail.author == user %}
+                        <a href="{% url 'post-delete' post_detail.id %}"><button>Удалить</button></a>
+                        <a href="{% url 'post-update' post_detail.id %}"><button>Изменить</button></a>
                     {% endif %}
                 </div>
             {% else %}
@@ -40,13 +41,5 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
 
 {% endblock %}

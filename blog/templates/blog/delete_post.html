@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title%}удаление{%endblock%}
+
+{% block content_blog %}
+    <div class="text-center mt-5">
+        <h1>Вы уверены, что хотите удалить пост - {{ object.title }}</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success m-5">Да, удалить</button>
+            <a href="{% url 'post-detail' object.slug object.pk %}"> <button class="btn btn-danger m-5">Нет, не удалять</button></a>
+        </form>
+    </div>
+{% endblock %}

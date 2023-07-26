@@ -96,6 +96,8 @@ INSTALLED_APPS = [
 
     # мои приложения
     'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
+    'notification',
 ]
 
 SITE_ID = 1

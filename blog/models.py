@@ -66,7 +66,7 @@ class Post(models.Model):
         return self.save_posts.count()
 
     def get_absolute_url(self):
-        # даеться уникальный url для постов (пример: users_id/post_slug)
+        # даёться уникальный url для постов (пример: users_id/post_slug)
         return reverse('post-detail', kwargs={'pk': self.pk, 'slug': self.slug})
 
     def __str__(self):
