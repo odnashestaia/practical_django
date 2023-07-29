@@ -12,7 +12,6 @@
 other_static
 *.ipynb
 .pytest_cache
-static
 blog/__pycache__
 discussions/__pycache__
 practical_django/__pycache__
