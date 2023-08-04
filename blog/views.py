@@ -1,12 +1,15 @@
 """
 вывод постов пользователей
 """
+import random
+
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 
+from blog.forms import CommentForm
 from blog.models import *
 
 
@@ -51,7 +54,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 #     template_name = "blog/post_detail.html"
 #     context_object_name = 'post_detail'
 
-def PostDetailView(request, pk, slug):
+def post_detail_view(request, pk, slug):
     handel_page = get_object_or_404(Post, id=pk, slug=slug)
 
     total_comments = handel_page.comments_blog.all().filter(reply_comment=None).order_by('-id')
@@ -61,6 +64,20 @@ def PostDetailView(request, pk, slug):
 
     context = {}
 
+    if request.method == 'POST':  # проверка сделан запрос
+        comments_qs = None  # нету комментов под комментами
+        comments_form = CommentForm(request.POST or None)  # типо пусто или не пусто
+        if comments_form.is_valid():  # если форма валидна
+            form = request.POST.get('body_text')
+            comment = Comment.objects.create(name_author=request.user, post=handel_page, body_text=form,
+                                             reply_comment=comments_qs)
+            comment.save()
+            total_comments = handel_page.comments_blog.all().filter(reply_comment=None).order_by('-id')
+    else:
+        comments_form = CommentForm()
+
+    context['comment_form'] = comments_form
+    context['comments'] = total_comments
     context['post'] = handel_page
 
     return render(request, 'blog/post_detail.html', context)
@@ -92,3 +109,22 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == post.author:  # сверяем автора поста и пользователя
             return True
         return False
+
+
+class HomePostListViewAllUsers(ListView):
+    model = Post
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+    ordering = ['-date_created']
+    paginate_by = 3
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(HomePostListViewAllUsers, self).get_context_data()
+        user = list(User.objects.exclude(pk=self.request.user.pk))
+        if len(user) > 3:
+            out = 3
+        else:
+            out = len(user)
+        random_user = random.sample(user, out)
+        context['random_users'] = random_user
+        return context

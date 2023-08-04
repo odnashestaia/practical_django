@@ -4,8 +4,9 @@ from .models import Post, Comment
 
 
 class CommentForm(forms.ModelForm):
-    body = forms.CharField(
+    body_text = forms.CharField(
         widget=forms.Textarea(attrs={'class': 'form-control custom-text', 'cols': '40', 'row': '80'}), label='')
+
     class Meta:
         model = Comment
-        fields = ['body', ]
+        fields = ['body_text', ]

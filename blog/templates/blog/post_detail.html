@@ -6,8 +6,14 @@
 
     <div class="container py-4 py-xl-5" style="background: #fbf8f4;">
         <div class="row mb-5">
-            <div class="col-xl-12"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="150" height="150"
+            <div class="col-xl-12">
+                {% if post.author.profile.image %}
+                <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="150" height="150"
                                         src="{{ post.author.profile.image.url }}" alt="error">
+                {% else %}
+                    <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="150" height="150"
+                                        src="/media/def_profile.jpg" alt="not error">
+                {% endif %}
                 <p class="fw-bold mb-0"><span class="by">by</span> <a href="#">{{ post.author }}</a></p>
                 <p class="text-muted mb-0"><span class="date">{{ post.date_created|date:"F d Y" }} </span></p>
 
@@ -62,7 +68,9 @@
             </div>
             <div class="col-xl-8 offset-xl-1" style="background: var(--bs-white);">
                 <div class="p-4">
-                    <p class="border rounded border-2">comment</p>
+                    <p class="border rounded border-2">
+                        {% include 'blog/comments.html' %}
+                    </p>
                     <div class="border rounded border-2 p-4">
                         <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50"
                                                  height="50"
