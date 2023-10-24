@@ -3,6 +3,9 @@
 """
 import random
 
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
@@ -49,6 +52,29 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+@login_required
+def saved_post_is_ajax(request):
+    post = get_object_or_404(Post, id=request.POST.get('id'))
+    saved = False
+    if post.save_posts.filter(id=request.user.id).exists():
+        post.save_posts.remove(request.user)
+        saved = False
+    else:
+        post.save_posts.add(request.user)
+        saved = True
+    context = {
+        'post': post,
+        'total_saved_post': post.total_save(),
+        'saved': saved
+    }
+
+    if request.is_ajax():
+        html = render_to_string('blog/save_section.html',
+                                context, request=request)
+
+        return JsonResponse({'form': html})
+
+
 # class PostDetailView(DetailView):
 #     model = Post
 #     template_name = "blog/post_detail.html"
@@ -57,28 +83,49 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 def post_detail_view(request, pk, slug):
     handel_page = get_object_or_404(Post, id=pk, slug=slug)
 
-    total_comments = handel_page.comments_blog.all().filter(reply_comment=None).order_by('-id')
+    total_comments = handel_page.comments_blog.all().filter(
+        reply_comment=None).order_by('-id')
     total_comments2 = handel_page.comments_blog.all().order_by('-id')
     total_likes = handel_page.total_likes()
-    total_pages = handel_page.total_save()
+    total_save = handel_page.total_save()
 
     context = {}
 
     if request.method == 'POST':  # проверка сделан запрос
         comments_qs = None  # нету комментов под комментами
-        comments_form = CommentForm(request.POST or None)  # типо пусто или не пусто
+        # типо пусто или не пусто
+        comments_form = CommentForm(request.POST or None)
         if comments_form.is_valid():  # если форма валидна
             form = request.POST.get('body_text')
             comment = Comment.objects.create(name_author=request.user, post=handel_page, body_text=form,
                                              reply_comment=comments_qs)
             comment.save()
-            total_comments = handel_page.comments_blog.all().filter(reply_comment=None).order_by('-id')
+            total_comments = handel_page.comments_blog.all().filter(
+                reply_comment=None).order_by('-id')
     else:
         comments_form = CommentForm()
+
+    like = False
+    if handel_page.likes_post.filter(id=request.user.id).exists():
+        like = True
+
+    context['total_likes'] = total_likes
+    context['like'] = like
+
+    saved = False
+    if handel_page.save_posts.filter(id=request.user.id).exists():
+        saved = True
+
+    context['total_save'] = total_save
+    context['saved'] = saved
 
     context['comment_form'] = comments_form
     context['comments'] = total_comments
     context['post'] = handel_page
+
+    if request.is_ajax():
+        html = render_to_string('blog/comments.html', context)
+        return JsonResponse({"form": html})
 
     return render(request, 'blog/post_detail.html', context)
 
@@ -128,3 +175,35 @@ class HomePostListViewAllUsers(ListView):
         random_user = random.sample(user, out)
         context['random_users'] = random_user
         return context
+
+
+@login_required
+def all_save_view_post(request):
+    user = request.user
+    saved_post = user.save_posts.all()
+    context = {'save_post': saved_post}
+    return render(request, 'blog/saved_post.html', context)
+
+
+@login_required
+def like_post(request):
+    post = get_object_or_404(Post, id=request.POST.get('id'))
+    like = False
+    if post.likes_post.filter(id=request.user.id).exists():
+        post.likes_post.remove(request.user)
+        like = False
+    else:
+        post.likes_post.add(request.user)
+        like = True
+
+    contex = {
+        'post': post,
+        'total_likes': post.total_likes(),
+        'like': like,
+    }
+
+    if request.is_ajax():
+        html = render_to_string(
+            'blog/like_selektion.html', contex, request=request)
+
+    return JsonResponse({'form': html})

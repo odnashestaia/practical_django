@@ -16,8 +16,11 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{% url 'post_create' %}">Создание постов</a>
                             <a class="dropdown-item" href="{% url 'blog_home' %}">Все посты</a>
-                            <a class="dropdown-item" href="{% url 'user_post_list' user %}">Мои посты</a></div>
+                            <a class="dropdown-item" href="{% url 'user_post_list' user %}">Мои посты</a>
+                        </div>
                     </li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'saved_post' %}"
+                                            style="color: rgba(224,217,217,0.9);">сохраненые посты </a></li>
                 </ul>
                 <p class="ms-auto navbar-text actions"><a class="login" href="login.html"
                                                           style="color: rgba(224,217,217,0.9);">Log In</a> <a

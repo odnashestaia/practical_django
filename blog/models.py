@@ -40,15 +40,18 @@ class Post(models.Model):
                              db_index=True)  # в скобках опции\настройки моделей
     # content = models.TextField(max_length=5000, blank=True, null=True, help_text='не более 5000 символов') стандартное добавление контента
 
-    content = RichTextField(max_length=5000, blank=True, null=True, help_text='не более 5000 символов')
+    content = RichTextField(max_length=5000, blank=True,
+                            null=True, help_text='не более 5000 символов')
     date_created = models.DateTimeField(default=timezone.now)
     date_update = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE)  # null=True что бы могли писать не зарегистрированые пользователи
     # в url при использовании slug обязательно добавляем id + get_absolute_url()
     slug = models.SlugField(max_length=50)  # , unique=True добавить потом
-    likes_post = models.ManyToManyField(User, related_name='post_comment', blank=True)
-    save_posts = models.ManyToManyField(User, related_name='save_posts', blank=True)
+    likes_post = models.ManyToManyField(
+        User, related_name='post_comment', blank=True)
+    save_posts = models.ManyToManyField(
+        User, related_name='save_posts', blank=True)
 
     # reply = models.ForeignKey('self', null=True, related_name='reply_ok', on_delete=models.CASCADE)
 
@@ -62,7 +65,7 @@ class Post(models.Model):
         return self.likes_post.count()
 
     def total_save(self):
-        # подсчет сохранены постов
+        # подсчет сохранены постовa
         return self.save_posts.count()
 
     def get_absolute_url(self):
@@ -81,12 +84,15 @@ def prepopulated_slug(sender, instance, **kwargs):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, related_name='comments_blog', on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, related_name='comments_blog', on_delete=models.CASCADE)
     name_author = models.ForeignKey(User, on_delete=models.CASCADE)
     body_text = models.TextField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True)
-    like_comment = models.ManyToManyField(User, related_name='likes_blog_comment', blank=True)
-    reply_comment = models.ForeignKey('self', null=True, related_name='replies_comment', on_delete=models.CASCADE)
+    like_comment = models.ManyToManyField(
+        User, related_name='likes_blog_comment', blank=True)
+    reply_comment = models.ForeignKey(
+        'self', null=True, related_name='replies_comment', on_delete=models.CASCADE)
 
     def total_likes_comment(self):
         return self.like_comment.count()

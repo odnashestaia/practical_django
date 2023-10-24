@@ -2,6 +2,10 @@
 
 
 # Debug Toolbar
+from django.contrib.messages import constants as messages
+from dotenv import load_dotenv
+from pathlib import Path
+import os
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -21,15 +25,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 # https://docs.python.org/3/library/os.html
-import os
-from pathlib import Path
 
 # python-dotenv
 # https://pypi.org/project/python-dotenv/
 # .env в корне проекта
 
-from dotenv import load_dotenv
-from django.contrib.messages import constants as messages
 
 # Loading ENV
 env_path = Path('.') / '.env'
@@ -111,6 +111,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",  # Debug Toolbar
+    'middleware.middleware.AjaxMiddleware'
 ]
 
 ROOT_URLCONF = 'practical_django.urls'

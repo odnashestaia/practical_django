@@ -18,3 +18,4 @@ practical_django/__pycache__
 blog/test/__pycache__
 *.css
 *.js
+db_practical_d_1.sqlite3
